@@ -10,8 +10,8 @@ const PostNavigation = createStackNavigator();
 export const AppNavigation = () => {
     return (
         <PostNavigation.Navigator>
-            <PostNavigation.Screen name='Main' component={MainScreen} />
-            <PostNavigation.Screen name='Post' component={PostScreen} />
+            <PostNavigation.Screen name='Main' component={MainScreen} options={{ title: 'Мой блог' }} />
+            <PostNavigation.Screen name='Post' component={PostScreen} options={{title:'Пост 13'}} />
         </PostNavigation.Navigator>
     )
 }
