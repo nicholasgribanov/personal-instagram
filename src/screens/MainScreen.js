@@ -6,7 +6,7 @@ import { Post } from '../components/Post'
 export const MainScreen = ({ navigation }) => {
 
     const openPostHandler = post => {
-        navigation.navigate('Post', {postId: post.id, date: post.date})
+        navigation.navigate('Post', {postId: post.id, date: post.date, booked: post.booked})
     }
 
     return <FlatList style={styles.wrapper}
