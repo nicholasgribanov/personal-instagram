@@ -4,6 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { MainScreen } from '../screens/MainScreen';
 import { PostScreen } from '../screens/PostScreen';
 import { THEME } from '../theme';
+import { AppHeaderIcon } from '../components/AppHeaderIcon'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 
 const PostNavigation = createStackNavigator();
@@ -18,7 +20,12 @@ export const AppNavigation = () => {
         }}>
             <PostNavigation.Screen
                 name='Main' component={MainScreen}
-                options={{ title: 'Мой блог' }} />
+                options={{
+                    title: 'Мой блог',
+                    headerRight: () => (<HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+                        <Item title="Take photo" iconName='ios-camera' onPress={() => console.log('press photo')} />
+                    </HeaderButtons>)
+                }} />
             <PostNavigation.Screen name='Post'
                 component={PostScreen}
                 options={({ route }) => ({ title: 'Пост от ' + new Date(route.params?.date).toLocaleDateString() })} />
