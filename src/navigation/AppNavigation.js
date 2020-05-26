@@ -21,9 +21,7 @@ export const AppNavigation = () => {
                 options={{ title: 'Мой блог' }} />
             <PostNavigation.Screen name='Post'
                 component={PostScreen}
-                options={{
-                    title: 'Пост 13',
-                }} />
+                options={({ route }) => ({ title: 'Пост от ' + new Date(route.params?.date).toLocaleDateString() })} />
         </PostNavigation.Navigator>
     )
 }

@@ -1,9 +1,10 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
-export const PostScreen = ({ }) => {
+export const PostScreen = ({ navigation, route }) => {
+    const postId = route.params?.postId ?? '1'
     return <View style={styles.center}>
-        <Text>PostScreen</Text>
+        <Text>{postId}</Text>
     </View>
 }
 
