@@ -1,16 +1,45 @@
 import * as React from 'react';
 import { Platform } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { MainScreen } from '../screens/MainScreen';
 import { PostScreen } from '../screens/PostScreen';
+import { BookedScreen } from '../screens/BookedScreen';
 import { THEME } from '../theme';
 import { AppHeaderIcon } from '../components/AppHeaderIcon'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { Ionicons } from '@expo/vector-icons';
 
 
 const PostNavigation = createStackNavigator();
+const TabNavigation = createBottomTabNavigator();
+
 
 export const AppNavigation = () => {
+    return (
+        <TabNavigation.Navigator tabBarOptions={{
+            activeTintColor: THEME.MAIN_COLOR
+        }}>
+            <TabNavigation.Screen
+                name='Post'
+                component={PostNavigator}
+                options={{
+                    tabBarIcon: ({ color }) => <Ionicons name='ios-albums' size={25} color={color} />
+                }}
+
+            />
+            <TabNavigation.Screen
+                name='Booked'
+                component={BookedNavigator}
+                options={{
+                    tabBarIcon: ({ color }) => <Ionicons name='ios-star' size={25} color={color} />
+                }}
+            />
+        </TabNavigation.Navigator>
+    )
+}
+
+const PostNavigator = () => {
     return (
         <PostNavigation.Navigator screenOptions={{
             headerStyle: {
@@ -46,3 +75,25 @@ export const AppNavigation = () => {
         </PostNavigation.Navigator>
     )
 }
+
+const BookedNavigator = () => {
+    return (
+        <PostNavigation.Navigator screenOptions={{
+            headerStyle: {
+                backgroundColor: Platform.OS === 'android' ? THEME.MAIN_COLOR : '#fff'
+            },
+            headerTintColor: Platform.OS === 'android' ? '#fff' : THEME.MAIN_COLOR
+        }}>
+            <PostNavigation.Screen
+                name="Booked"
+                component={BookedScreen}
+            />
+            <PostNavigation.Screen
+                name="Post"
+                component={PostScreen}
+            />
+
+        </PostNavigation.Navigator>
+    )
+}
+
