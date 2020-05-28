@@ -85,8 +85,14 @@ const BookedNavigator = () => {
             headerTintColor: Platform.OS === 'android' ? '#fff' : THEME.MAIN_COLOR
         }}>
             <PostNavigation.Screen
-                name="Booked"
+                name="Избранное"
                 component={BookedScreen}
+                options={{
+                    headerLeft: () => (
+                        <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+                            <Item title="Toogle Drawer" iconName='ios-menu' onPress={() => console.log('press menu')} />
+                        </HeaderButtons>)
+                }}
             />
             <PostNavigation.Screen
                 name="Post"
