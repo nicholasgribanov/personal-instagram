@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Platform } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import { MainScreen } from '../screens/MainScreen';
 import { PostScreen } from '../screens/PostScreen';
 import { BookedScreen } from '../screens/BookedScreen';
@@ -12,18 +13,27 @@ import { Ionicons } from '@expo/vector-icons';
 
 
 const PostNavigation = createStackNavigator();
-const TabNavigation = createBottomTabNavigator();
+const TabNavigation = Platform.OS === 'android'
+    ? createMaterialBottomTabNavigator()
+    : createBottomTabNavigator();
 
 
 export const AppNavigation = () => {
     return (
-        <TabNavigation.Navigator tabBarOptions={{
-            activeTintColor: THEME.MAIN_COLOR
-        }}>
+        <TabNavigation.Navigator
+            shifting={true}
+            activeTintColor='#fff'
+            barStyle={{
+                backgroundColor: THEME.MAIN_COLOR
+            }}
+            tabBarOptions={{
+                activeTintColor: THEME.MAIN_COLOR
+            }}>
             <TabNavigation.Screen
                 name='Post'
                 component={PostNavigator}
                 options={{
+                    tabBarLabel: 'Все',
                     tabBarIcon: ({ color }) => <Ionicons name='ios-albums' size={25} color={color} />
                 }}
 
@@ -32,6 +42,7 @@ export const AppNavigation = () => {
                 name='Booked'
                 component={BookedNavigator}
                 options={{
+                    tabBarLabel: 'Избранное',
                     tabBarIcon: ({ color }) => <Ionicons name='ios-star' size={25} color={color} />
                 }}
             />
