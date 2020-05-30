@@ -17,6 +17,13 @@ const TabNavigation = Platform.OS === 'android'
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
 
+const screenOptions = {
+    headerStyle: {
+        backgroundColor: Platform.OS === 'android' ? THEME.MAIN_COLOR : '#fff'
+    },
+    headerTintColor: Platform.OS === 'android' ? '#fff' : THEME.MAIN_COLOR
+}
+
 
 export const AppNavigation = () => {
     return (
@@ -52,12 +59,7 @@ export const AppNavigation = () => {
 
 const PostNavigator = () => {
     return (
-        <PostNavigation.Navigator screenOptions={{
-            headerStyle: {
-                backgroundColor: Platform.OS === 'android' ? THEME.MAIN_COLOR : '#fff'
-            },
-            headerTintColor: Platform.OS === 'android' ? '#fff' : THEME.MAIN_COLOR
-        }}>
+        <PostNavigation.Navigator screenOptions={screenOptions}>
             <PostNavigation.Screen
                 name='Main' component={MainScreen}
                 options={{
@@ -89,12 +91,7 @@ const PostNavigator = () => {
 
 const BookedNavigator = () => {
     return (
-        <PostNavigation.Navigator screenOptions={{
-            headerStyle: {
-                backgroundColor: Platform.OS === 'android' ? THEME.MAIN_COLOR : '#fff'
-            },
-            headerTintColor: Platform.OS === 'android' ? '#fff' : THEME.MAIN_COLOR
-        }}>
+        <PostNavigation.Navigator screenOptions={screenOptions}>
             <PostNavigation.Screen
                 name="Избранное"
                 component={BookedScreen}
@@ -108,6 +105,10 @@ const BookedNavigator = () => {
             <PostNavigation.Screen
                 name="Post"
                 component={PostScreen}
+                options={({ route }) => ({
+                    title: 'Пост от ' + new Date(route.params?.date).toLocaleDateString()
+                }
+                )}
             />
 
         </PostNavigation.Navigator>
