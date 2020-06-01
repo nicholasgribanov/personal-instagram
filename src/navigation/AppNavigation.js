@@ -3,8 +3,11 @@ import { Platform } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 import { MainScreen } from '../screens/MainScreen';
 import { PostScreen } from '../screens/PostScreen';
+import { AboutScreen } from '../screens/AboutScreen';
+import { CreateScreen } from '../screens/CreateScreen';
 import { BookedScreen } from '../screens/BookedScreen';
 import { THEME } from '../theme';
 import { AppHeaderIcon } from '../components/AppHeaderIcon'
@@ -16,6 +19,7 @@ const PostNavigation = createStackNavigator();
 const TabNavigation = Platform.OS === 'android'
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
+const DrawerNavigation = createDrawerNavigator();
 
 const screenOptions = {
     headerStyle: {
@@ -26,6 +30,16 @@ const screenOptions = {
 
 
 export const AppNavigation = () => {
+    return (
+        <DrawerNavigation.Navigator>
+            <DrawerNavigation.Screen name='PostTabs' component={PostAndBookedNavigation} />
+            <DrawerNavigation.Screen name='About' component={AboutScreen} />
+            <DrawerNavigation.Screen name='Create' component={CreateScreen} />
+        </DrawerNavigation.Navigator>
+    )
+}
+
+const PostAndBookedNavigation = () => {
     return (
         <TabNavigation.Navigator
             shifting={true}
@@ -57,7 +71,7 @@ export const AppNavigation = () => {
     )
 }
 
-const PostNavigator = () => {
+const PostNavigator = ({ navigation }) => {
     return (
         <PostNavigation.Navigator screenOptions={screenOptions}>
             <PostNavigation.Screen
@@ -70,7 +84,7 @@ const PostNavigator = () => {
                         </HeaderButtons>),
                     headerLeft: () => (
                         <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
-                            <Item title="Toogle Drawer" iconName='ios-menu' onPress={() => console.log('press menu')} />
+                            <Item title="Toogle Drawer" iconName='ios-menu' onPress={() => navigation.toggleDrawer()} />
                         </HeaderButtons>)
                 }} />
             <PostNavigation.Screen name='Post'
@@ -89,7 +103,7 @@ const PostNavigator = () => {
     )
 }
 
-const BookedNavigator = () => {
+const BookedNavigator = ({ navigation }) => {
     return (
         <PostNavigation.Navigator screenOptions={screenOptions}>
             <PostNavigation.Screen
@@ -98,7 +112,7 @@ const BookedNavigator = () => {
                 options={{
                     headerLeft: () => (
                         <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
-                            <Item title="Toogle Drawer" iconName='ios-menu' onPress={() => console.log('press menu')} />
+                            <Item title="Toogle Drawer" iconName='ios-menu' onPress={() => navigation.toggleDrawer()} />
                         </HeaderButtons>)
                 }}
             />
