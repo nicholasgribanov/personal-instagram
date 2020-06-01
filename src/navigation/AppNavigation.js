@@ -16,6 +16,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 
 const PostNavigation = createStackNavigator();
+const AboutNavigation = createStackNavigator();
+const CreateNavigation = createStackNavigator();
 const TabNavigation = Platform.OS === 'android'
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
@@ -31,10 +33,33 @@ const screenOptions = {
 
 export const AppNavigation = () => {
     return (
-        <DrawerNavigation.Navigator>
-            <DrawerNavigation.Screen name='PostTabs' component={PostAndBookedNavigation} />
-            <DrawerNavigation.Screen name='About' component={AboutScreen} />
-            <DrawerNavigation.Screen name='Create' component={CreateScreen} />
+        <DrawerNavigation.Navigator drawerContentOptions={{
+            activeTintColor: THEME.MAIN_COLOR,
+            labelStyle: {
+                fontFamily: 'open-bold'
+            }
+        }}>
+            <DrawerNavigation.Screen
+                name='PostTabs'
+                component={PostAndBookedNavigation}
+                options={{
+                    drawerLabel: 'Главная'
+                }}
+            />
+            <DrawerNavigation.Screen
+                name='About'
+                component={AboutNavigator}
+                options={{
+                    drawerLabel: 'О приложении'
+                }}
+            />
+            <DrawerNavigation.Screen
+                name='Create'
+                component={CreateNavigator}
+                options={{
+                    drawerLabel: 'Создать пост'
+                }}
+            />
         </DrawerNavigation.Navigator>
     )
 }
@@ -71,7 +96,7 @@ const PostAndBookedNavigation = () => {
     )
 }
 
-const PostNavigator = ({ navigation }) => {
+const PostNavigator = ({ navigation, route }) => {
     return (
         <PostNavigation.Navigator screenOptions={screenOptions}>
             <PostNavigation.Screen
@@ -80,7 +105,7 @@ const PostNavigator = ({ navigation }) => {
                     title: 'Мой блог',
                     headerRight: () => (
                         <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
-                            <Item title="Take photo" iconName='ios-camera' onPress={() => console.log('press photo')} />
+                            <Item title="Take photo" iconName='ios-camera' onPress={() => navigation.navigate('Create')} />
                         </HeaderButtons>),
                     headerLeft: () => (
                         <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
@@ -126,6 +151,36 @@ const BookedNavigator = ({ navigation }) => {
             />
 
         </PostNavigation.Navigator>
+    )
+}
+
+const AboutNavigator = ({ navigation }) => {
+    return (
+        <AboutNavigation.Navigator screenOptions={screenOptions}>
+            <AboutNavigation.Screen name='About' component={AboutScreen}
+                options={{
+                    title:'О приложении',
+                    headerLeft: () => (
+                        <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+                            <Item title="Toogle Drawer" iconName='ios-menu' onPress={() => navigation.toggleDrawer()} />
+                        </HeaderButtons>)
+                }} />
+        </AboutNavigation.Navigator>
+    )
+}
+
+const CreateNavigator = ({ navigation }) => {
+    return (
+        <CreateNavigation.Navigator screenOptions={screenOptions}>
+            <CreateNavigation.Screen name='Create' component={CreateScreen}
+                options={{
+                    title:'Создать пост',
+                    headerLeft: () => (
+                        <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+                            <Item title="Toogle Drawer" iconName='ios-menu' onPress={() => navigation.toggleDrawer()} />
+                        </HeaderButtons>)
+                }} />
+        </CreateNavigation.Navigator>
     )
 }
 
