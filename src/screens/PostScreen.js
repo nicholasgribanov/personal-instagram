@@ -2,10 +2,20 @@ import React from 'react'
 import { View, Text, StyleSheet, Image, Button, ScrollView, Alert } from 'react-native'
 import { DATA } from '../data'
 import { THEME } from '../theme'
+import { useDispatch, useSelector } from "react-redux";
+import { bookingPost } from "../store/actions/post";
+import { AppHeaderIcon } from '../components/AppHeaderIcon'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 export const PostScreen = ({ navigation, route }) => {
+    const dispatch = useDispatch();
     const postId = route.params?.postId ?? '1'
     const post = DATA.find(p => p.id === postId)
+
+    const booked = useSelector(state =>
+        state.post.bookedPosts.some(post => post.id === postId)
+    )
+
     const removeHandler = () => {
         Alert.alert(
             "Удаление поста",
@@ -20,6 +30,15 @@ export const PostScreen = ({ navigation, route }) => {
             { cancelable: false }
         );
     }
+
+    navigation.setOptions({
+        title: 'Пост от ' + new Date(route.params?.date).toLocaleDateString(),
+        headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+                <Item title="Take photo" iconName={booked ? 'ios-star' : 'ios-star-outline'} onPress={() => dispatch(bookingPost(postId))} />
+            </HeaderButtons>)
+    })
+
     return (
         <ScrollView>
             <Image source={{ uri: post.img }} style={styles.image} />

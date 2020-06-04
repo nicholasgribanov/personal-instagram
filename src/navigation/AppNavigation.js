@@ -114,16 +114,7 @@ const PostNavigator = ({ navigation, route }) => {
                 }} />
             <PostNavigation.Screen name='Post'
                 component={PostScreen}
-                options={
-                    ({ route }) => ({
-                        title: 'Пост от ' + new Date(route.params?.date).toLocaleDateString(),
-                        headerRight: () => (
-                            <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
-                                <Item title="Take photo" iconName={route.params?.booked ? 'ios-star' : 'ios-star-outline'} onPress={() => console.log('press photo')} />
-                            </HeaderButtons>)
-
-                    })
-                } />
+ />
         </PostNavigation.Navigator>
     )
 }
