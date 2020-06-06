@@ -3,14 +3,14 @@ import { View, Text, StyleSheet, Image, Button, ScrollView, Alert } from 'react-
 import { DATA } from '../data'
 import { THEME } from '../theme'
 import { useDispatch, useSelector } from "react-redux";
-import { bookingPost } from "../store/actions/post";
+import { bookingPost, removePost } from "../store/actions/post";
 import { AppHeaderIcon } from '../components/AppHeaderIcon'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 export const PostScreen = ({ navigation, route }) => {
     const dispatch = useDispatch();
     const postId = route.params?.postId ?? '1'
-    const post = DATA.find(p => p.id === postId)
+    const post = useSelector(state => state.post.allPosts.find(p => p.id === postId))
 
     const booked = useSelector(state =>
         state.post.bookedPosts.some(post => post.id === postId)
@@ -25,10 +25,20 @@ export const PostScreen = ({ navigation, route }) => {
                     text: "Отменить",
                     style: "cancel"
                 },
-                { text: "Удалить", onPress: () => { }, style: 'destructive' }
+                {
+                    text: "Удалить", onPress: () => {
+                        navigation.navigate('Main')
+                        dispatch(removePost(postId))
+                    },
+                    style: 'destructive'
+                }
             ],
             { cancelable: false }
         );
+    }
+
+    if (!post) {
+        return null
     }
 
     navigation.setOptions({

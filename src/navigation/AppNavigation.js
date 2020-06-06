@@ -123,7 +123,7 @@ const BookedNavigator = ({ navigation }) => {
     return (
         <PostNavigation.Navigator screenOptions={screenOptions}>
             <PostNavigation.Screen
-                name="Избранное"
+                name="Booked"
                 component={BookedScreen}
                 options={{
                     headerLeft: () => (
