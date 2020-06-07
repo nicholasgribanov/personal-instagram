@@ -1,4 +1,4 @@
-import { BOOKING_POST, LOAD_POSTS, REMOVE_POST } from "../../types"
+import { BOOKING_POST, LOAD_POSTS, REMOVE_POST, ADD_POST } from "../../types"
 import { DATA } from "../../data"
 
 export const loadPosts = () => {
@@ -19,5 +19,13 @@ export const removePost = (id) => {
     return {
         type: REMOVE_POST,
         payload: id
+    }
+}
+
+export const addPost = post => {
+    post.id = Date.now().toString()
+    return {
+        type: ADD_POST,
+        payload: post
     }
 }
