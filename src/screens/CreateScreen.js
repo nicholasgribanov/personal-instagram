@@ -3,11 +3,12 @@ import { useDispatch } from 'react-redux'
 import { View, Text, StyleSheet, Image, TextInput, Button, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { THEME } from '../theme'
 import { addPost } from '../store/actions/post'
+import { PhotoPicker } from '../components/PhotoPicker'
 
 export const CreateScreen = ({ navigation }) => {
     const dispatch = useDispatch()
     const [text, setText] = useState('')
-    const img = 'https://scontent-arn2-2.cdninstagram.com/v/t51.2885-15/e35/s1080x1080/83631485_649899789089916_4908424426903329056_n.jpg?_nc_ht=scontent-arn2-2.cdninstagram.com&_nc_cat=100&_nc_ohc=moB3OQNCIKoAX9k0T3f&oh=8d8ce414ee1c2e88f58db8906e7d1808&oe=5EF6EBEA'
+    const [img, setImg] = useState(null)
 
     const saveHandler = () => {
         const post = {
@@ -18,7 +19,12 @@ export const CreateScreen = ({ navigation }) => {
         }
         dispatch(addPost(post))
         setText('')
+        setImg(null)
         navigation.navigate('Main')
+    }
+
+    const photoHandler = uri => {
+        setImg(uri)
     }
 
     return (
@@ -33,17 +39,13 @@ export const CreateScreen = ({ navigation }) => {
                         onChangeText={setText}
                         multiline
                     />
-                    <Image
-                        style={{ width: '100%', height: 200 }}
-                        source={{
-                            uri: img
-                        }}
-                    />
+                    <PhotoPicker onPick={photoHandler} />
 
                     <Button
                         title="Создать пост"
                         color={THEME.MAIN_COLOR}
                         onPress={saveHandler}
+                        disabled={!text || !img}
                     />
                 </View>
             </TouchableWithoutFeedback>
