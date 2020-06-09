@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, Button, ScrollView, Alert } from 'react-native'
-import { DATA } from '../data'
 import { THEME } from '../theme'
 import { useDispatch, useSelector } from "react-redux";
 import { bookingPost, removePost } from "../store/actions/post";
