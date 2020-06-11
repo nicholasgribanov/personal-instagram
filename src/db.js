@@ -42,4 +42,32 @@ export class DB {
             })
         })
     }
+
+    static updatePost(post) {
+        return new Promise((resolve, reject) => {
+            db.transaction(tx => {
+                tx.executeSql(
+                    'UPDATE posts SET booked = ? WHERE ID = ?',
+                    [post.booked ? 0 : 1, post.id],
+                    resolve,
+                    (_, error) => reject(error)
+                )
+            }
+            )
+        })
+    }
+
+    static removePost(id) {
+        return new Promise((resolve, reject) => {
+            db.transaction(tx => {
+                tx.executeSql(
+                    'DELETE FROM posts WHERE ID = ?',
+                    [id],
+                    resolve,
+                    (_, error) => reject(error)
+                )
+            }
+            )
+        })
+    }
 }

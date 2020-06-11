@@ -15,18 +15,21 @@ export const loadPosts = () => {
 
 }
 
-export const bookingPost = (id) => {
-    return {
+export const bookingPost = (post) => async dispatch => {
+    await DB.updatePost(post)
+
+    dispatch({
         type: BOOKING_POST,
-        payload: id
-    }
+        payload: post.id
+    })
 }
 
-export const removePost = (id) => {
-    return {
+export const removePost = (id) => async dispatch => {
+    await DB.removePost(id)
+    dispatch({
         type: REMOVE_POST,
         payload: id
-    }
+    })
 }
 
 export const addPost = post => async dispatch => {

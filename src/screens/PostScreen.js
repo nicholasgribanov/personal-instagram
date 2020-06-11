@@ -44,7 +44,7 @@ export const PostScreen = ({ navigation, route }) => {
         title: 'Пост от ' + new Date(route.params?.date).toLocaleDateString(),
         headerRight: () => (
             <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
-                <Item title="Take photo" iconName={booked ? 'ios-star' : 'ios-star-outline'} onPress={() => dispatch(bookingPost(postId))} />
+                <Item title="Take photo" iconName={booked ? 'ios-star' : 'ios-star-outline'} onPress={() => dispatch(bookingPost(post))} />
             </HeaderButtons>)
     })
 
