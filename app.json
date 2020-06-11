@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Own Instagram on RN",
-    "slug": "rn-self-posts",
+    "name": "Self Instagram",
+    "slug": "rn-self-inst",
+    "privacy": "public",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,7 +22,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "name.nicholasgribanov.self-inst",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "name.nicholasgribanov.self_inst",
+      "versionCode": 1,
+      "permissions": [
+        "CAMERA",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     }
   }
 }
